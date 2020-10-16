@@ -12,22 +12,19 @@ var Person = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Person.prototype, "birthday", {
+        get: function () {
+            return this._birthday;
+        },
+        set: function (birthday) {
+            this._birthday = birthday;
+        },
+        enumerable: false,
+        configurable: true
+    });
     return Person;
 }());
 var person = new Person();
-function validation(errorFlg) {
-    var message;
-    if (errorFlg == 0) {
-        message = '空欄だよ。';
-    }
-    else if (errorFlg == 1) {
-        message = '未来の日付だよ。';
-    }
-    else {
-        message = '不明なエラーだよ。';
-    }
-    return message;
-}
 function regName() {
     var Name = document.getElementById("name");
     var name = Name.value;
@@ -78,10 +75,27 @@ function splitBirthday(birthday) {
     return birthdayList;
 }
 function tellPastEvents(birthYear, birthMonth, birthDay) {
-    var birthday = birthYear + '年' + birthMonth + '月' + birthDay + '日';
+    person.birthday = birthYear + '年' + birthMonth + '月' + birthDay + '日';
     var showWikipedia = '<a href="https://ja.wikipedia.org/wiki/' + birthYear + '%E5%B9%B4%E3%81%AE%E6%97%A5%E6%9C%AC#' + birthMonth + '%E6%9C%88" target="blank">こんな</a>';
-    var reply = '<p>' + person.name + 'さんは' + birthday + 'に生まれたんだね！</p>';
-    var tellEvent = '<p>' + person.name + 'さんの生まれた月には' + showWikipedia + 'ことがあったよ！</p>';
+    var confirm = '<p>' + person.name + 'さんは、' + person.birthday + 'に生まれたんだね！</p>';
+    var tellEvent = '<p>' + person.name + 'さんの生まれた月には、' + showWikipedia + 'ことがあったよ！</p>';
     var back = '<p><a href="index.html">さいしょにもどる</a></p>';
-    return reply + tellEvent + back;
+    var reply = confirm + back;
+    if (birthYear >= 1980) {
+        reply = confirm + tellEvent + back;
+    }
+    return reply;
+}
+function validation(errorFlg) {
+    var message;
+    if (errorFlg == 0) {
+        message = '空欄だよ。';
+    }
+    else if (errorFlg == 1) {
+        message = '未来の日付だよ。';
+    }
+    else {
+        message = '不明なエラーだよ。';
+    }
+    return message;
 }

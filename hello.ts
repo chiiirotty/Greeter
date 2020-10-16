@@ -1,12 +1,20 @@
 let display;
 
 class Person {
-    _name: string; 
+    _name: string;
+    _birthday: string;
+
     get name(): string {
         return this._name;
     }
     set name(name: string) {
         this._name = name;
+    }
+    get birthday(): string {
+        return this._birthday;
+    }
+    set birthday(birthday: string) {
+        this._birthday = birthday;
     }
 }
 
@@ -63,12 +71,16 @@ function splitBirthday(birthday: string) {
 }
 
 function tellPastEvents(birthYear: number, birthMonth: number, birthDay: number) {
-    let birthday = birthYear + '年' + birthMonth + '月' + birthDay + '日';
+    person.birthday = birthYear + '年' + birthMonth + '月' + birthDay + '日';
     let showWikipedia = '<a href="https://ja.wikipedia.org/wiki/' + birthYear + '%E5%B9%B4%E3%81%AE%E6%97%A5%E6%9C%AC#' + birthMonth + '%E6%9C%88" target="blank">こんな</a>';
-    let reply = '<p>'+ person.name + 'さんは、' + birthday + 'に生まれたんだね！</p>';
+    let confirm = '<p>'+ person.name + 'さんは、' + person.birthday + 'に生まれたんだね！</p>';
     let tellEvent = '<p>' + person.name + 'さんの生まれた月には、' + showWikipedia + 'ことがあったよ！</p>';
     let back = '<p><a href="index.html">さいしょにもどる</a></p>';
-    return reply + tellEvent + back;
+    let reply = confirm + back;
+    if (birthYear >= 1980) {
+        reply = confirm + tellEvent + back;
+    }
+    return reply;
 }
 
 function validation(errorFlg: number) {
